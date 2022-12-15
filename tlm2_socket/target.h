@@ -30,9 +30,12 @@ public:
 	// So the target needs to implement a single method named b_transport
 	virtual void b_transport( tlm::tlm_generic_payload& trans, sc_time& delay);
 
+	virtual bool get_direct_mem_ptr( tlm::tlm_generic_payload& trans, tlm::tlm_dmi& dmi_data);
+
 private:
 	int mem[SIZE];
 
+	const sc_time LATENCY;
 };
 
 #endif

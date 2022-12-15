@@ -26,9 +26,13 @@ public:
 	// A thread process which can keep generating a stream of generic payload
 	void generic_payload_generator();
 
+	virtual void invalidate_direct_mem_ptr(sc_dt::uint64 start_range, sc_dt::uint64 end_range);
+
 private:
 	int data;
 
+	bool dmi_ptr_valid;
+	tlm::tlm_dmi dmi_data;
 };
 
 #endif
