@@ -3,3 +3,4 @@ main
 *.log
 *.o
 obj/
+*.vcd

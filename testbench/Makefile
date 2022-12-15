@@ -1,28 +1,29 @@
-${SYSTEMC_HOME} = /usr/local/systemc230
+#${SYSTEMC_HOME} = /usr/local/systemc233
+SYSTEMC_HOME=/usr/local/systemc233
 
 #all:
 #	g++ -I. -I${SYSTEMC_HOME}/include -L. -L${SYSTEMC_HOME}/lib-linux64 -Wl,-rpath=${SYSTEMC_HOME}/lib-linux64 -o counter_tb counter_tb.cpp -lsystemc -lm
 
-SYSTEMC_ARCH = linux64
+SYSTEMC_ARCH=linux64
 
-LIB_DIRS = -L$(SYSTEMC_HOME)/lib-$(SYSTEMC_ARCH) -L.
+LIB_DIRS=-L$(SYSTEMC_HOME)/lib-$(SYSTEMC_ARCH) -L.
 
-RUN_TIME_SEARCH = -Wl,-rpath=$(SYSTEMC_HOME)/lib-$(SYSTEMC_ARCH)
+RUN_TIME_SEARCH=-Wl,-rpath=$(SYSTEMC_HOME)/lib-$(SYSTEMC_ARCH)
 
-INCLUDE_DIRS = -I. -I$(SYSTEMC_HOME)/include
+INCLUDE_DIRS=-I. -I$(SYSTEMC_HOME)/include
 
-LIBS = -lsystemc -lm
+LIBS=-lsystemc -lm
 
-HEADERS = hello_world.h hello_world_tb.h
+HEADERS=hello_world.h hello_world_tb.h
 
-SOURCES = main.cpp hello_world.cpp hello_world_tb.cpp
+SOURCES=main.cpp hello_world.cpp hello_world_tb.cpp
 
-DEPENDENCIES = \
-		Makefile \
-		$(HEADERS) \
+DEPENDENCIES=\
+		Makefile\
+		$(HEADERS)\
 		$(SOURCES)
 
-TESTS = main
+TESTS=main
 all: $(TESTS)
 	./$(TESTS)
 	#@make cmp_result
