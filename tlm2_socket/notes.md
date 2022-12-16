@@ -75,3 +75,10 @@
 	- `dmi_data.set_start_address()` & `set_end_address()`: They describe the bounds of the DMI region from the point of view of the target
 	- `dmi_data.set_read_latency()` & `dmi_data.set_write_latency`: They are estimates of the timing parameters for memory access
 
+## Debug Transport Interface
+- Purpose of Debug Transport I/F: give an initiator the ability to read or write memory in the target without causing any side-effects and without simulation time passing
+- Debug Transport only uses forward path and has only one interface
+	- The target must implement `transport_dbg` method and register this method to socket
+
+- `transport_dbg`: A method that provided by target and is used to copy the given number of bytes for the initiator to debug
+	- 

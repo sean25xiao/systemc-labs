@@ -12,6 +12,9 @@ Target::Target(sc_module_name _name)
 
 	// register the defined get_direct_mem_ptr method to socket
 	socket.register_get_direct_mem_ptr(this, &Target::get_direct_mem_ptr);
+
+	// register the defined transport_dbg method to socket
+	socket.register_transport_dbg(this, &Target::transport_dbg);
 }
 
 // Detailed implementation for method b_transport
@@ -87,4 +90,22 @@ bool Target::get_direct_mem_ptr( tlm::tlm_generic_payload& trans, tlm::tlm_dmi& 
 
 	// Return true if the target can provide a DMI pointer, or false otherwise
 	return true;
+}
+
+// Detailed implementation for method transport_dbg
+unsigned int Target::transport_dbg(tlm::tlm_generic_payload& trans)
+{
+	tlm::tlm_command cmd = trans.get_command();
+	sc_dt::uint64    adr = trans.get_address() / 4;
+	unsigned char*   ptr = trans.get_data_ptr();
+	unsigned int     len = trans.get_data_length();
+
+	unsigned int num_bytes = (len < SIZE - adr) ? len : SIZE - adr;
+
+	if ( cmd == tlm::TLM_READ_COMMAND )
+		memcpy(ptr, &mem[adr], num_bytes);
+	else if ( cmd == tlm::TLM_WRITE_COMMAND )
+		memcpy(&mem[adr], ptr, num_bytes);
+
+	return num_bytes;
 }

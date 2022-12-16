@@ -88,6 +88,26 @@ void Initiator::generic_payload_generator()
 		} // end of dmi_ptr_valid
 
 	} // end of for loop
+
+	// ************************************
+	// Debug Transport Interface
+	// ************************************
+	cout << "Now request a debug transaction via Debug Transport Interface" << endl;
+
+    p_trans->set_address(0);        // Set address
+    p_trans->set_read();            // Set command
+    p_trans->set_data_length(128);  // Set data length
+
+    unsigned char* data = new unsigned char[128];
+    p_trans->set_data_ptr(data);    // Set data pointer
+
+    unsigned int n_bytes = socket->transport_dbg( *p_trans );
+
+    for (unsigned int i = 0; i < n_bytes; i += 4)
+    {
+      cout << "mem[" << i << "] = "
+           << *(reinterpret_cast<unsigned int*>( &data[i] )) << endl;
+    }
 }
 
 void Initiator::invalidate_direct_mem_ptr(sc_dt::uint64 start_range, sc_dt::uint64 end_range)

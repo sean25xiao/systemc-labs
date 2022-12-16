@@ -26,11 +26,22 @@ public:
 
 	enum { SIZE = 256 };
 
+	// *****************
+	// Transport
+	// *****************
 	// The initiator will communicate with the target using the blocking transport i/f
 	// So the target needs to implement a single method named b_transport
 	virtual void b_transport( tlm::tlm_generic_payload& trans, sc_time& delay);
 
+	// *****************
+	// DMI
+	// *****************
 	virtual bool get_direct_mem_ptr( tlm::tlm_generic_payload& trans, tlm::tlm_dmi& dmi_data);
+
+	// *****************
+	// DMI
+	// *****************
+	virtual unsigned int transport_dbg(tlm::tlm_generic_payload& trans);
 
 private:
 	int mem[SIZE];
